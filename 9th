@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>jQuery Append & Animate Demo</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:20px}
+.container{max-width:700px;margin:auto;background:#fff;padding:20px;border-radius:6px;box-shadow:0 0 10px #0002}
+h1,h2{color:#333}button{padding:8px 15px;background:#2ecc71;color:#fff;border:0;border-radius:5px;cursor:pointer;margin:5px 5px 15px 0}
+button:hover{background:#27ae60}.box{width:100px;height:100px;background:#3498db;margin:15px 0;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>jQuery Demo</h1>
+
+<h2>a. Append Content</h2>
+<p id="para">This is an existing paragraph. </p>
+<ul id="list"><li>Item 1</li><li>Item 2</li></ul>
+<button id="append">Append</button>
+
+<h2>b. Animate Element</h2>
+<div id="box1" class="box"></div>
+<button id="animate">Animate</button>
+
+<h2>c. Animate & Change Color</h2>
+<div id="box2" class="box"></div>
+<button id="colorAnim">Animate + Color</button>
+</div>
+
+<script>
+$(function(){
+  // a. Append content
+  $("#append").click(()=>{$("#para").append(" Appended text.");$("#list").append("<li>New item</li>");});
+
+  // b. Animate element
+  $("#animate").click(()=>{$("#box1").animate({width:"200px",height:"200px",opacity:0.5},800);});
+
+  // c. Animate & color change
+  $("#colorAnim").click(()=>{
+    $("#box2").animate({width:"200px",height:"200px"},{
+      duration:1000,
+      step:function(now,fx){
+        if(fx.prop==="width"){let r=Math.round(now);$(this).css("background",`rgb(${r},80,180)`);}
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
