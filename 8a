@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Visitor Counter</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:20px}
+.container{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:5px;box-shadow:0 0 10px #0001}
+h1{text-align:center;color:#333}
+.counter{text-align:center;font-size:22px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Welcome to Our Website</h1>
+<div class="counter">
+<?php
+$file = 'visitor_count.txt';
+
+// Read and update visitor count safely
+if (file_exists($file)) {
+    $count = (int)file_get_contents($file);
+} else {
+    $count = 0;
+}
+$count++;
+file_put_contents($file, $count);
+
+echo "<h2>Visitor Count</h2>";
+echo "<p>You are visitor number: <strong>$count</strong></p>";
+?>
+</div>
+</div>
+</body>
+</html>
