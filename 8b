@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Student Record Sorter</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:20px}
+.container{max-width:800px;margin:auto;background:#fff;padding:20px;border-radius:5px;box-shadow:0 0 10px #0001}
+h1{text-align:center;color:#333}table{width:100%;border-collapse:collapse;margin-top:20px}
+th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#f2f2f2}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Student Records (Sorted by GPA)</h1>
+<?php
+$host='localhost';$db='student_records';$user='root';$pass='';
+try{
+  $pdo=new PDO("mysql:host=$host;dbname=$db",$user,$pass);
+  $students=$pdo->query("SELECT * FROM students")->fetchAll(PDO::FETCH_ASSOC);
+  function selectionSort(&$a){$n=count($a);for($i=0;$i<$n-1;$i++){ $m=$i;for($j=$i+1;$j<$n;$j++)if($a[$j]['gpa']<$a[$m]['gpa'])$m=$j;
+    if($m!=$i){$t=$a[$i];$a[$i]=$a[$m];$a[$m]=$t;}}}
+  selectionSort($students);
+  echo "<table><tr><th>ID</th><th>Name</th><th>GPA</th></tr>";
+  foreach($students as $s)echo "<tr><td>{$s['id']}</td><td>{$s['name']}</td><td>{$s['gpa']}</td></tr>";
+  echo "</table>";
+}catch(PDOException $e){echo "Error: ".$e->getMessage();}
+?>
+</div>
+</body>
+</html>
+  
+sql xamppp
+<!-- CREATE DATABASE student_records;
+USE student_records;
+CREATE TABLE students (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  gpa FLOAT
+);
+
+INSERT INTO students (name, gpa) VALUES
+('Alice', 8.2),
+('Bob', 7.5),
+('Charlie', 9.0),
+('David', 6.8); -->
