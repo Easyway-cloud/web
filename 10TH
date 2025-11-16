@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajax Demo Program</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+body {
+    font-family: Arial, sans-serif; 
+    line-height: 1.6;
+    margin: 0; 
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+.container {
+    max-width: 800px; 
+    margin: auto; 
+    background: white; 
+    padding: 20px; 
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h1 { color: #333; }
+h2 { color: #666; }
+button {
+    background-color: #4CAF50; 
+    border: none;
+    color: white; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer; 
+    border-radius: 4px;
+}
+pre {
+    background-color: #f8f8f8; 
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
+    padding: 10px;
+    white-space: pre-wrap; 
+    word-wrap: break-word;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Ajax Demo Program</h1>
+
+<h2>a. Ajax Request (without jQuery)</h2>
+<button onclick="loadTextNative()">Send Native Ajax Request</button>
+<pre id="result-a">Click the button to load text.</pre>
+
+---
+
+<h2>b. Ajax Request (with jQuery `$.ajax()`) - FIXED</h2>
+<button onclick="loadTextWithJQuery()">Send jQuery Ajax Request</button>
+<pre id="result-b">Click the button to load text.</pre>
+
+---
+
+<h2>c. jQuery `$.getJSON()` Method - FIXED SIMULATION</h2>
+<button onclick="getJSONOperation()">Use getJSON()</button>
+<pre id="result-c">Click the button to load JSON data.</pre>
+
+---
+
+<h2>d. jQuery `$.parseJSON()` Method</h2>
+<button onclick="parseJSONExample()">Use parseJSON()</button>
+<pre id="result-d">Click the button to parse a JSON string.</pre>
+</div>
+
+
+<script>
+// --------------------------------------------------------------------------------
+// SIMULATED SERVER DATA (For local testing without a real server/files)
+// --------------------------------------------------------------------------------
+const SIMULATED_TEXT_CONTENT = "This text content has been retrieved by the simulated AJAX request from a text file.";
+const SIMULATED_JSON_STRING = '{"id": 101, "product": "Widget-X", "price": 49.99, "available": true}';
+
+// Helper function to simulate a delayed server response (like a real AJAX call)
+function simulateFetch(data) {
+    return new Promise(resolve => setTimeout(() => resolve(data), 500));
+}
+
+// --------------------------------------------------------------------------------
+// a. Use ajax() method (without Jquery) - Uses Fetch/Promise structure for simulation
+function loadTextNative() {
+    simulateFetch(SIMULATED_TEXT_CONTENT)
+        .then(text => {
+            document.getElementById("result-a").textContent = text;
+        })
+        .catch(error => {
+            document.getElementById("result-a").textContent = "Error loading text: " + error.message;
+        });
+}
+
+// --------------------------------------------------------------------------------
+// b. Use ajax() method (with Jquery) - FIXED using Deferred object for reliable simulation
+function loadTextWithJQuery() {
+    // We use $.Deferred to simulate the asynchronous success of an $.ajax call.
+    var deferred = $.Deferred();
+
+    // Simulate the server delay and resolve the promise with our text content.
+    setTimeout(function() {
+        deferred.resolve(SIMULATED_TEXT_CONTENT);
+    }, 500);
+
+    // This block correctly demonstrates the handling of the $.ajax success (.done)
+    deferred.promise().done(function(data) {
+        $("#result-b").text(data);
+    }).fail(function() {
+        $("#result-b").text("Simulated AJAX request failed.");
+    });
+}
+
+// --------------------------------------------------------------------------------
+// c. Illustrate the use of getJSON() method in jQuery - FIXED SIMULATION
+function getJSONOperation() {
+    // Since we can't fetch a real file, we simulate a successful fetch and parsing.
+    var parsedObject = JSON.parse(SIMULATED_JSON_STRING);
+
+    simulateFetch(parsedObject)
+        .then(data => {
+            // $.getJSON automatically parses, so we display the parsed object.
+            $("#result-c").text(
+                "Data retrieved and automatically parsed by $.getJSON():\n" + 
+                JSON.stringify(data, null, 2)
+            );
+        });
+}
+
+// --------------------------------------------------------------------------------
+// d. Illustrate the use of parseJSON() method to display JSON values.
+function parseJSONExample() {
+    var jsonString = SIMULATED_JSON_STRING; 
+    
+    // $.parseJSON converts the JSON string into a native JavaScript object
+    var jsonObject = $.parseJSON(jsonString);
+    
+    var output = "1. Original JSON String (as received from server):\n" + jsonString + "\n\n";
+    output += "2. Parsed JavaScript Object (Accessing data):\n";
+    output += `Product Name: ${jsonObject.product}\n`;
+    output += `Price: $${jsonObject.price}\n`;
+    output += `Is Available: ${jsonObject.available}`;
+
+    $("#result-d").text(output);
+}
+</script>
+</body>
+</html>
