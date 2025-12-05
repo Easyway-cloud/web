@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Styled Page</title>
+    <style>
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db
+        }
+
+        h3:hover {
+            color: #e74c3c
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #000, transparent)
+        }
+
+        p[lang] {
+            font-style: italic
+        }
+
+        .highlight {
+            background: #f1c40f
+        }
+
+        #main {
+            max-width: 800px;
+            margin: auto;
+            padding: 15px;
+            background: #ecf0f1
+        }
+
+        section p {
+            margin-bottom: 8px
+        }
+
+        section>span {
+            color: #16a085;
+            font-weight: bold
+        }
+
+        h2+p {
+            color: #777
+        }
+
+        time[datetime] {
+            color: #8e44ad;
+            font-weight: bold
+        }
+
+        p::first-letter {
+            font-size: 1.3em;
+            color: #c0392b;
+            font-weight: bold
+        }
+
+        img,
+        a {
+            border: 1px solid #ccc;
+            padding: 3px
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: #e74c3c;
+            text-decoration: underline
+        }
+
+        article.special p {
+            color: #27ae60;
+            text-indent: 18px
+        }
+    </style>
+</head>
+
+<body>
+    <main id="main">
+        <h2>Welcome</h2>
+        <p>This paragraph uses sibling selector.</p>
+
+        <h3>Hover me</h3>
+        <hr>
+
+        <p lang="en">This uses attribute selector.</p>
+
+        <p>Here is a <span class="highlight">highlight</span>.</p>
+
+        <section>
+            <p>Descendant selector example.</p>
+            <span>Child selector example.</span>
+        </section>
+
+        <p>Date: <time datetime="2023-08-31">Aug 31</time></p>
+
+        <article class="special">
+            <p>Special combined selector applied.</p>
+        </article>
+        <img src="image address" alt="img">
+        <p>Visit <a href="https://github.com/Easyway-cloud/web/tree/main">this link</a>.</p>
+    </main>
+</body>
+
+</html>
